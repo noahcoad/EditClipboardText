@@ -19,6 +19,7 @@ namespace EditClipboardText
 
 		static ExitCode RunMain(string[] args)
 		{
+			// Verify command line arguments
 			if (args.Length > 0 && !args[0].Equals("/editor", StringComparison.OrdinalIgnoreCase)) return ShowSyntax();
 
 			// Locate an appropriate editor
@@ -37,6 +38,7 @@ namespace EditClipboardText
 
 		static ExitCode ShowSyntax()
 		{
+			// Display the usage syntax
 			MessageBox.Show(AppSyntax, "EditClipboardText");
 			return ExitCode.ShowSyntax;
 		}
