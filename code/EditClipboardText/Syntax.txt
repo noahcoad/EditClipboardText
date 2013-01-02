@@ -4,6 +4,6 @@ to a temp file, and opens the file in your favorite text editor
 Syntax: EditClipboardText [/editor <file>]
 
 Where <file> is the full path and file name to the editor to
-be used, otherwise the environment variable "edit" is used,
-if still no editor is found, Notepad.exe is used
+be used, otherwise uses a shell execute of the .txt file to
+open it in the default editor
 

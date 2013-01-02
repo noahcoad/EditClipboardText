@@ -22,16 +22,17 @@ namespace EditClipboardText
 			// Verify command line arguments
 			if (args.Length > 0 && !args[0].Equals("/editor", StringComparison.OrdinalIgnoreCase)) return ShowSyntax();
 
-			// Locate an appropriate editor
-			string editor = null;
-			if (args.Length > 1 && args[0].Equals("/editor", StringComparison.InvariantCultureIgnoreCase) && File.Exists(args[1])) editor = args[1];
-			else { editor = Environment.ExpandEnvironmentVariables("%edit%"); if (!File.Exists(editor)) editor = null; } 
-			if (String.IsNullOrEmpty(editor)) editor = Path.Combine(Environment.ExpandEnvironmentVariables("%system%"), "notepad.exe");
-
 			// Save text and open it
 			string tmptxt = Path.ChangeExtension(Path.GetTempFileName(), ".txt");
 			File.WriteAllText(tmptxt, Clipboard.GetText());
-			Process.Start(editor, tmptxt);
+
+			// If an editor was specified use it, otherwise use default
+			string editor = null;
+			if (args.Length > 1 && args[0].Equals("/editor", StringComparison.InvariantCultureIgnoreCase) && File.Exists(args[1])) editor = args[1];
+			//else { editor = Environment.ExpandEnvironmentVariables("%edit%"); if (!File.Exists(editor)) editor = null; } 
+			//if (String.IsNullOrEmpty(editor)) editor = Path.Combine(Environment.ExpandEnvironmentVariables("%system%"), "notepad.exe");
+			if (editor != null) Process.Start(editor, tmptxt);
+			else Process.Start(tmptxt);
 
 			return ExitCode.Success;
 		}
